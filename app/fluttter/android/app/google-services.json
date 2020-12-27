@@ -1,0 +1,131 @@
+{
+  "project_info": {
+    "project_number": "822881825301",
+    "firebase_url": "https://bisa-68064.firebaseio.com",
+    "project_id": "bisa-68064",
+    "storage_bucket": "bisa-68064.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:822881825301:android:38043092cfc156fefc541c",
+        "android_client_info": {
+          "package_name": "com.bisa.bisa_park"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "822881825301-8ls09apccideg35c0hiq58hicljn5ao8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bisa.bisa_park",
+            "certificate_hash": "c16a4529bd0e7af2ddb38a184802073a8997c47a"
+          }
+        },
+        {
+          "client_id": "822881825301-680c89r7bdfn02thp1undudesue439rf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bisa.bisa_park",
+            "certificate_hash": "a1839bcf7e0954ebe5a168723cf6b962118b4fe3"
+          }
+        },
+        {
+          "client_id": "822881825301-pc0qc8nl1a6t98veoccsprgvqgvg1c4h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bisa.bisa_park",
+            "certificate_hash": "8555e716a21620b58977d4acc918b1ac0a7b95a0"
+          }
+        },
+        {
+          "client_id": "822881825301-09qvgsdbh99glm91reput5qbekhi62c2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bisa.bisa_park",
+            "certificate_hash": "cf4314ed6bafd715144da1e9475c7aead5e96e11"
+          }
+        },
+        {
+          "client_id": "822881825301-qna3f74k0rlu2io85ld36aot7vg5v1vb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bisa.bisa_park",
+            "certificate_hash": "7d33b48f694cdf08602a2e699b19a428302d9e1d"
+          }
+        },
+        {
+          "client_id": "822881825301-sfmk2u399s9k94kgj589a0clo80n0i97.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bisa.bisa_park",
+            "certificate_hash": "a663fb1032c1ecda66e264863c28a0803056581c"
+          }
+        },
+        {
+          "client_id": "822881825301-o3ak1hqajcv8di8mdjuem2mj2o13jk74.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJSablyvqv0cKwUuMXUH1-umV5yd8nZ88"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "822881825301-o3ak1hqajcv8di8mdjuem2mj2o13jk74.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "822881825301-8969dt9b285g4asd9k8pidtbb3vv6f5t.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.bisa.parkApp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:822881825301:android:5022e41d4a682c69fc541c",
+        "android_client_info": {
+          "package_name": "com.example.bisa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "822881825301-o3ak1hqajcv8di8mdjuem2mj2o13jk74.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJSablyvqv0cKwUuMXUH1-umV5yd8nZ88"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "822881825301-o3ak1hqajcv8di8mdjuem2mj2o13jk74.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "822881825301-8969dt9b285g4asd9k8pidtbb3vv6f5t.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.bisa.parkApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
