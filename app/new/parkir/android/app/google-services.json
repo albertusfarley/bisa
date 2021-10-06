@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "643536511702",
+    "project_id": "bisa-7c060",
+    "storage_bucket": "bisa-7c060.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:643536511702:android:75ce2167a887b84caddf77",
+        "android_client_info": {
+          "package_name": "com.bisa.parkir"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "643536511702-92bmevrv22sojdnt4hhof9j0a0vnpj8l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bisa.parkir",
+            "certificate_hash": "acf3e7d670dbb4ecdbadc480adbf2a6d89727caa"
+          }
+        },
+        {
+          "client_id": "643536511702-84akgdt22hr4feq2pqbqko6ht0svjd4f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_TgmYAhjbb9pXwfrpGpoG3cw7eBJATdM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "643536511702-84akgdt22hr4feq2pqbqko6ht0svjd4f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
