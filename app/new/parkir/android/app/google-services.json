@@ -7,18 +7,18 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:643536511702:android:75ce2167a887b84caddf77",
+        "mobilesdk_app_id": "1:643536511702:android:f1bfb9c446f9c6ffaddf77",
         "android_client_info": {
           "package_name": "com.bisa.parkir"
         }
       },
       "oauth_client": [
         {
-          "client_id": "643536511702-92bmevrv22sojdnt4hhof9j0a0vnpj8l.apps.googleusercontent.com",
+          "client_id": "643536511702-6bktk6sfvd8iugq2pqh3fmdsa64js6hj.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.bisa.parkir",
-            "certificate_hash": "acf3e7d670dbb4ecdbadc480adbf2a6d89727caa"
+            "certificate_hash": "e501ef49af5dc10bca563491bbbd1b9c590f2f35"
           }
         },
         {
