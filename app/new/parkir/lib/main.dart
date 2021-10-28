@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:parkir/bindings/auth_binding.dart';
 import 'package:parkir/constants/colors.dart';
 import 'package:parkir/routes/routes.dart';
@@ -11,7 +12,10 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
-  runApp(const MyApp());
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((_) {
+    runApp(MyApp());
+  });
 }
 
 class MyApp extends StatelessWidget {
@@ -36,6 +40,7 @@ class MyApp extends StatelessWidget {
             titleTextStyle: TextStyle(
                 color: black, fontSize: 20, fontWeight: FontWeight.bold),
             iconTheme: IconThemeData(color: black)),
+        // textTheme: GoogleFonts.mulishTextTheme()
       ),
       home: const Wrapper(),
       initialBinding: AuthBinding(),

@@ -2,11 +2,19 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:parkir/constants/colors.dart';
+import 'package:parkir/constants/padding.dart';
 import 'package:parkir/models/dummy.dart';
+import 'package:parkir/models/parking_area.dart';
 import 'package:parkir/routes/route_name.dart';
+import 'package:parkir/screens/search_area.dart';
 import 'package:parkir/services/auth.dart';
+import 'package:parkir/widgets/area_list.dart';
+import 'package:parkir/widgets/area_tile.dart';
+import 'package:parkir/widgets/banner_list.dart';
 import 'package:parkir/widgets/custom_text.dart';
+import 'package:parkir/widgets/new_list.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -17,118 +25,78 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   TextEditingController searchController = TextEditingController();
-  List<String> buildings = Dummy.kampus;
+
   AuthController _auth = Get.find();
 
   @override
   Widget build(BuildContext context) {
-    // return Scaffold(
-    //   body: Container(
-    //       constraints: const BoxConstraints.expand(),
-    //       child: Center(
-    //         child: TextButton(
-    //             onPressed: () => Get.toNamed(RouteName.signout),
-    //             child: customText(text: 'Navigate', color: primary)),
-    //       )),
-    // );
-
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
         overlays: [SystemUiOverlay.top, SystemUiOverlay.bottom]);
 
     return SafeArea(
       child: Scaffold(
         body: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
+          // padding: const EdgeInsets.symmetric(horizontal: 24),
           constraints: const BoxConstraints.expand(),
-          child: Column(
+          child: ListView(
             children: [
-              const SizedBox(
-                height: 16,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  TextButton(
-                      onPressed: () async {
-                        await _auth.signOut();
-                        Get.offNamed(RouteName.home);
-                      },
-                      child: customText(text: 'Sign Out', color: Colors.red)),
-                  RichText(
-                      text: TextSpan(
-                          style: const TextStyle(color: black),
-                          children: [
-                        const TextSpan(text: 'Hi, '),
-                        TextSpan(
-                            text: _auth.user!.name,
-                            style: const TextStyle(fontWeight: FontWeight.bold))
-                      ])),
-                  const SizedBox(
-                    width: 16,
-                  ),
-                  ClipOval(
-                    child: CachedNetworkImage(
-                      imageUrl: _auth.user!.photoURL!,
-                      height: 40,
-                      width: 40,
-                      placeholder: (context, url) => Container(
-                          padding: const EdgeInsets.all(8),
-                          child: const CircularProgressIndicator()),
-                      errorWidget: (context, url, error) =>
-                          const Icon(Icons.error),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 16),
-              TextField(
-                controller: searchController,
-                onChanged: (String str) => setState(() {
-                  buildings = Dummy.kampus
-                      .where((String building) => building
-                          .toLowerCase()
-                          .contains(searchController.text.toLowerCase()))
-                      .toList();
-                }),
-                decoration: InputDecoration(
-                    prefixIcon: const Icon(Icons.search),
-                    suffixIcon: searchController.text == ''
-                        ? const SizedBox.shrink()
-                        : IconButton(
-                            onPressed: () {
-                              setState(() {
-                                searchController.text = '';
-                              });
-                            },
-                            icon: const Icon(Icons.cancel)),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(16)),
-                    hintText: 'Cari Lokasi'),
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              Expanded(
-                  child: ListView(
-                children: [
-                  for (String kampus in buildings)
-                    Column(
-                      children: [
-                        Card(
-                          color: grey.withOpacity(.1),
-                          elevation: .0,
-                          child: ListTile(
-                            title: customText(text: kampus),
+              verticalSpacer(),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                width: Get.width,
+                height: 48,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () => Get.to(const SearchArea(),
+                            transition: Transition.downToUp),
+                        child: TextField(
+                          readOnly: true,
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.zero,
+                            isDense: true,
+                            prefixIcon: Icon(
+                              Ionicons.search,
+                              color: dark,
+                            ),
+                            hintText: 'Find parking area',
+                            hintStyle: const TextStyle(color: grey),
+                            filled: true,
+                            enabled: false,
+                            fillColor: grey.withOpacity(.05),
+                            focusColor: dark,
+                            disabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(40),
+                                borderSide:
+                                    BorderSide(color: grey.withOpacity(.2))),
                           ),
                         ),
-                        const SizedBox(
-                          height: 16,
-                        )
-                      ],
-                    )
-                ],
-              )),
+                      ),
+                    ),
+                    horizontalSpacer(),
+                    ClipOval(
+                      child: CachedNetworkImage(
+                        imageUrl: _auth.user!.photoURL!,
+                        height: 48,
+                        width: 48,
+                        placeholder: (context, url) => Container(
+                            padding: const EdgeInsets.all(8),
+                            child: const CircularProgressIndicator()),
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.error),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              verticalSpacer(),
+              const BannerList(),
+              verticalSpacer(),
+              const NewList(),
+              verticalSpacer(),
+              const AreaList(),
+              verticalSpacer(),
             ],
           ),
         ),
