@@ -10,6 +10,8 @@ class DatabaseService {
   final CollectionReference newCollection =
       FirebaseFirestore.instance.collection('new');
 
+  final CollectionReference locationsCollection = FirebaseFirestore.instance.collection('locations');
+
   Future<List> getBannersCollection() async {
     QuerySnapshot snapshot = await bannersCollection.get();
     return snapshot.docs.map((doc) => doc.data()).toList();
@@ -17,6 +19,11 @@ class DatabaseService {
 
   Future<List> getNewCollection() async {
     QuerySnapshot snapshot = await newCollection.get();
+    return snapshot.docs.map((doc) => doc.data()).toList();
+  }
+
+    Future<List> getLocationsCollection() async {
+    QuerySnapshot snapshot = await locationsCollection.get();
     return snapshot.docs.map((doc) => doc.data()).toList();
   }
 
