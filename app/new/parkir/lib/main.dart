@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:parkir/bindings/auth_binding.dart';
 import 'package:parkir/constants/colors.dart';
+import 'package:parkir/controllers/my_controller.dart';
 import 'package:parkir/routes/routes.dart';
 import 'package:parkir/screens/wrapper.dart';
 import 'package:get/get.dart';
@@ -11,6 +12,8 @@ import 'package:get/get.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
+  Get.put(MyController());
 
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
@@ -33,15 +36,14 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'parkir',
       theme: ThemeData(
-        scaffoldBackgroundColor: white,
-        appBarTheme: const AppBarTheme(
-            color: white,
-            elevation: .0,
-            titleTextStyle: TextStyle(
-                color: black, fontSize: 20, fontWeight: FontWeight.bold),
-            iconTheme: IconThemeData(color: black)),
-        // textTheme: GoogleFonts.mulishTextTheme()
-      ),
+          scaffoldBackgroundColor: white,
+          appBarTheme: const AppBarTheme(
+              color: white,
+              elevation: .0,
+              titleTextStyle: TextStyle(
+                  color: black, fontSize: 20, fontWeight: FontWeight.bold),
+              iconTheme: IconThemeData(color: black)),
+          textTheme: GoogleFonts.lexendDecaTextTheme()),
       home: const Wrapper(),
       initialBinding: AuthBinding(),
       getPages: Routes.pages,

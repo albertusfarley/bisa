@@ -5,13 +5,11 @@ import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:parkir/constants/colors.dart';
 import 'package:parkir/constants/padding.dart';
-import 'package:parkir/models/dummy.dart';
-import 'package:parkir/models/parking_area.dart';
 import 'package:parkir/routes/route_name.dart';
 import 'package:parkir/screens/search_area.dart';
 import 'package:parkir/services/auth.dart';
-import 'package:parkir/widgets/area_list.dart';
-import 'package:parkir/widgets/area_tile.dart';
+import 'package:parkir/widgets/parking_list.dart';
+import 'package:parkir/widgets/parking_tile.dart';
 import 'package:parkir/widgets/banner_list.dart';
 import 'package:parkir/widgets/custom_text.dart';
 import 'package:parkir/widgets/new_list.dart';
@@ -42,7 +40,8 @@ class _HomeState extends State<Home> {
             children: [
               verticalSpacer(),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: horizontalPadding),
                 width: Get.width,
                 height: 48,
                 child: Row(
@@ -56,11 +55,11 @@ class _HomeState extends State<Home> {
                           decoration: InputDecoration(
                             contentPadding: EdgeInsets.zero,
                             isDense: true,
-                            prefixIcon: Icon(
+                            prefixIcon: const Icon(
                               Ionicons.search,
                               color: dark,
                             ),
-                            hintText: 'Find parking area',
+                            hintText: 'Find parking location',
                             hintStyle: const TextStyle(color: grey),
                             filled: true,
                             enabled: false,
@@ -74,7 +73,7 @@ class _HomeState extends State<Home> {
                         ),
                       ),
                     ),
-                    horizontalSpacer(),
+                    horizontalItemSpacer(),
                     ClipOval(
                       child: CachedNetworkImage(
                         imageUrl: _auth.user!.photoURL!,
@@ -95,7 +94,7 @@ class _HomeState extends State<Home> {
               verticalSpacer(),
               const NewList(),
               verticalSpacer(),
-              const AreaList(),
+              const ParkingList(),
               verticalSpacer(),
             ],
           ),

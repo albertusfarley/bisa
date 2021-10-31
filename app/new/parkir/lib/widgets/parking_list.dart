@@ -1,28 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:parkir/constants/colors.dart';
 import 'package:parkir/constants/padding.dart';
 import 'package:parkir/models/parking.dart';
 import 'package:parkir/services/database.dart';
-import 'package:parkir/widgets/new_tile.dart';
-import 'package:parkir/widgets/request_tile.dart';
+import 'package:parkir/widgets/parking_tile.dart';
 
 import 'custom_text.dart';
 
-class NewList extends StatelessWidget {
-  const NewList({Key? key}) : super(key: key);
+class ParkingList extends StatefulWidget {
+  const ParkingList({Key? key}) : super(key: key);
 
+  @override
+  _ParkingListState createState() => _ParkingListState();
+}
+
+class _ParkingListState extends State<ParkingList> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: DatabaseService().getNewLocationsCollection(),
+        future: DatabaseService().getLocationsCollection(),
         builder: (_, AsyncSnapshot<List> snapshot) {
           if (snapshot.hasData) {
-            List<Widget> Parkings = [];
+            List data = snapshot.data!;
 
-            final data = snapshot.data!;
+            List<ParkingTile> Parkings = [];
+
             for (var item in data) {
-              Parkings.add(NewTile(
+              Parkings.add(ParkingTile(
                   parking: Parking(
                       name: item['name'],
                       category: item['category'],
@@ -34,16 +38,13 @@ class NewList extends StatelessWidget {
                       days: item['days'],
                       coordinates: item['coordinates'])));
             }
-
-            Parkings.add(const RequestTile());
-
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: horizontalPadding),
-                  child: Row(
+            return Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: horizontalPadding),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -51,13 +52,11 @@ class NewList extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           customText(
-                              text: 'New location for you',
+                              text: 'Parking location for you',
                               weight: FontWeight.bold),
-                          const SizedBox(
-                            height: 4,
-                          ),
+                          const SizedBox(height: 4),
                           customText(
-                              text: 'Let\' check this location out!',
+                              text: 'Get your space with ease.',
                               color: darkGrey),
                         ],
                       ),
@@ -75,25 +74,14 @@ class NewList extends StatelessWidget {
                       )
                     ],
                   ),
-                ),
-                verticalItemSpacer(),
-                SizedBox(
-                  height: 200,
-                  width: Get.width,
-                  child: ListView.separated(
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (_, index) => Container(
-                          padding: EdgeInsets.only(
-                              left: index == 0 ? horizontalPadding : 0,
-                              right: index == Parkings.length - 1
-                                  ? horizontalPadding
-                                  : 0),
-                          child: Parkings[index]),
-                      separatorBuilder: (_, index) =>
-                          horizontalItemSpacer(half: true),
-                      itemCount: Parkings.length),
-                ),
-              ],
+                  verticalItemSpacer(),
+                  for (ParkingTile area in Parkings)
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [area, horizontalItemSpacer()],
+                    )
+                ],
+              ),
             );
           } else {
             return Container();

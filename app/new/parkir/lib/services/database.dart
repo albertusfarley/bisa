@@ -7,23 +7,24 @@ class DatabaseService {
   final CollectionReference bannersCollection =
       FirebaseFirestore.instance.collection('banners');
 
-  final CollectionReference newCollection =
-      FirebaseFirestore.instance.collection('new');
-
-  final CollectionReference locationsCollection = FirebaseFirestore.instance.collection('locations');
+  final CollectionReference locationsCollection =
+      FirebaseFirestore.instance.collection('locations');
 
   Future<List> getBannersCollection() async {
     QuerySnapshot snapshot = await bannersCollection.get();
     return snapshot.docs.map((doc) => doc.data()).toList();
   }
 
-  Future<List> getNewCollection() async {
-    QuerySnapshot snapshot = await newCollection.get();
+  Future<List> getLocationsCollection() async {
+    QuerySnapshot snapshot = await locationsCollection.get();
     return snapshot.docs.map((doc) => doc.data()).toList();
   }
 
-    Future<List> getLocationsCollection() async {
-    QuerySnapshot snapshot = await locationsCollection.get();
+  Future<List> getNewLocationsCollection() async {
+    QuerySnapshot snapshot = await locationsCollection
+        .orderBy('date', descending: true)
+        .limit(3)
+        .get();
     return snapshot.docs.map((doc) => doc.data()).toList();
   }
 
