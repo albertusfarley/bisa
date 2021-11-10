@@ -3,7 +3,9 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:parkir/constants/colors.dart';
+import 'package:parkir/constants/shadow.dart';
 import 'package:parkir/services/auth.dart';
 import 'package:parkir/widgets/custom_text.dart';
 import 'package:parkir/widgets/loading.dart';
@@ -20,91 +22,77 @@ class _SignInState extends State<SignIn> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
-
     AuthController _auth = Get.find();
 
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: Stack(
-        children: [
-          Container(
-            constraints: const BoxConstraints.expand(),
-            child: Image.asset('images/sign_in.png', fit: BoxFit.cover),
-          ),
-          loading
-              ? const Loading()
-              : Container(
-                  constraints: const BoxConstraints.expand(),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 32, vertical: 48),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        width: double.infinity,
-                        padding: const EdgeInsets.symmetric(vertical: 20),
-                        child: Center(
-                            child: RichText(
-                          text: const TextSpan(
-                              style: TextStyle(fontSize: 16),
-                              children: [
-                                TextSpan(
-                                    text: 'BISA',
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.w900)),
-                                TextSpan(text: 'PARKIR')
-                              ]),
-                        )),
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          customText(
-                              text: 'LIHAT.\nDAPAT.\nPARKIR.',
-                              color: white,
-                              size: 32,
-                              weight: FontWeight.w900),
-                          const SizedBox(
-                            height: 24,
-                          ),
-                          GestureDetector(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  color: primary,
-                                  borderRadius: BorderRadius.circular(8)),
-                              width: double.infinity,
-                              padding: const EdgeInsets.symmetric(vertical: 20),
-                              child: Center(
-                                child: customText(
-                                    text: 'Masuk dengan Google',
-                                    weight: FontWeight.bold,
-                                    color: white),
-                              ),
+    return SafeArea(
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        body: loading
+            ? const Loading()
+            : Container(
+                constraints: const BoxConstraints.expand(),
+                child: Column(
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: Container(
+                          color: light,
+                          padding: const EdgeInsets.symmetric(horizontal: 64),
+                          child: Image.asset('images/login.png',
+                              fit: BoxFit.contain)),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: Container(
+                        constraints: BoxConstraints.expand(),
+                        padding: const EdgeInsets.symmetric(horizontal: 64),
+                        color: white,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            RichText(
+                                textAlign: TextAlign.center,
+                                text: TextSpan(
+                                    style: GoogleFonts.lexendDeca(
+                                        color: dark,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
+                                    children: const [
+                                      TextSpan(text: 'We bring '),
+                                      TextSpan(
+                                          text: 'future',
+                                          style: TextStyle(color: primary)),
+                                      TextSpan(text: ' to\nparking industry')
+                                    ])),
+                            customText(
+                                text: 'Park Better. Park Faster.', color: grey),
+                            GestureDetector(
+                              onTap: () async {
+                                _auth.signInWithGoogle();
+                                setState(() {
+                                  loading = true;
+                                });
+                              },
+                              child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 12, horizontal: 20),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8),
+                                      color: primary,
+                                      boxShadow: listShadow),
+                                  child: customText(
+                                      text: 'Sign in with Google',
+                                      color: white,
+                                      weight: FontWeight.bold)),
                             ),
-                            onTap: () async {
-                              _auth.signInWithGoogle();
-                              setState(() {
-                                loading = true;
-                              });
-                            },
-                          ),
-                          const SizedBox(
-                            height: 16,
-                          ),
-                          Container(
-                            alignment: Alignment.center,
-                            child: customText(
-                                text: '*Menggunakan akun Google anda',
-                                color: white,
-                                size: 12),
-                          )
-                        ],
+                          ],
+                        ),
                       ),
-                    ],
-                  )),
-        ],
+                    )
+                  ],
+                ),
+              ),
       ),
     );
   }

@@ -7,13 +7,24 @@ class RequestTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: white,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+    return Center(
       child: Container(
         padding: const EdgeInsets.all(12),
-        width: 150,
+        width: 160,
         height: 200,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            // gradient: LinearGradient(
+            //     begin: Alignment.bottomCenter,
+            //     end: Alignment.topCenter,
+            //     colors: [black.withOpacity(.5), white.withOpacity(0)])
+            color: white,
+            boxShadow: [
+              BoxShadow(
+                  color: grey.withOpacity(.2),
+                  offset: Offset(0, 4),
+                  blurRadius: 8)
+            ]),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,

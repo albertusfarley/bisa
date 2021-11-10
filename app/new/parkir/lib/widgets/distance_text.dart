@@ -20,7 +20,6 @@ class DistanceText extends StatelessWidget {
     double distance = myController.calculateDistance(
         myPosition: mine, targetPosition: target);
 
-    return customText(
-        text: '${distance.toPrecision(1)} km', color: darkGrey, size: 12);
+    return customText(text: '${distance.toPrecision(1)} km', color: darkGrey);
   }
 }

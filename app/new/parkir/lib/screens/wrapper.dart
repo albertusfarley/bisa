@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:parkir/screens/dashboard_shimmer.dart';
 import 'package:parkir/screens/home.dart';
 import 'package:parkir/screens/sign_in.dart';
 import 'package:parkir/services/auth.dart';

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:parkir/constants/colors.dart';
 
 class Loading extends StatelessWidget {
   const Loading({Key? key}) : super(key: key);
@@ -11,7 +12,7 @@ class Loading extends StatelessWidget {
       color: Colors.transparent,
       child: Center(
         child: SpinKitChasingDots(
-          color: Theme.of(context).primaryColor,
+          color: primary,
         ),
       ),
     );

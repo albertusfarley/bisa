@@ -2,10 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:parkir/widgets/custom_text.dart';
 
 class IsOpen extends StatefulWidget {
   final Map hours;
-  final Map days;
+  final List days;
 
   const IsOpen({required this.hours, required this.days, Key? key})
       : super(key: key);
@@ -17,41 +18,22 @@ class IsOpen extends StatefulWidget {
 class _IsOpenState extends State<IsOpen> {
   DateTime now = DateTime.now();
 
-  bool isOpen({required DateTime now, required Map days, required Map hours}) {
-    return (now.weekday >= days['start'] && now.weekday <= days['start']) &&
-        (now.hour >= hours['open'] && now.hour < hours['closed']);
+  bool isOpen({required DateTime now, required List days, required Map hours}) {
+    return (days.contains(now.weekday) &&
+        (now.hour >= hours['open'] && now.hour < hours['closed']));
   }
 
-  RichText openText() => RichText(
-          text: const TextSpan(
-              style:
-                  TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
-              children: [
-            WidgetSpan(
-                child: Icon(
-              Icons.access_time,
-              size: 16,
-              color: Colors.green,
-            )),
-            TextSpan(
-              text: ' Open',
-            )
-          ]));
-  RichText closedText() => RichText(
-          text: const TextSpan(
-              style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
-              children: [
-            WidgetSpan(
-                child: Icon(Icons.access_time, size: 16, color: Colors.red)),
-            TextSpan(
-              text: ' Closed',
-            )
-          ]));
+  Text openText() =>
+      customText(text: 'Open', weight: FontWeight.bold, color: Colors.green);
+  Text closedText() =>
+      customText(text: 'Closed', weight: FontWeight.bold, color: Colors.red);
 
   _getHour() {
-    setState(() {
-      now = DateTime.now();
-    });
+    if (mounted) {
+      setState(() {
+        now = DateTime.now();
+      });
+    }
   }
 
   @override

@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/date_symbol_data_file.dart';
 import 'package:parkir/bindings/auth_binding.dart';
 import 'package:parkir/constants/colors.dart';
 import 'package:parkir/controllers/my_controller.dart';
@@ -21,6 +22,14 @@ void main() async {
   });
 }
 
+class MyBehavior extends ScrollBehavior {
+  @override
+  Widget buildViewportChrome(
+      BuildContext context, Widget child, AxisDirection axisDirection) {
+    return child;
+  }
+}
+
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -33,6 +42,12 @@ class MyApp extends StatelessWidget {
         statusBarIconBrightness: Brightness.dark));
 
     return GetMaterialApp(
+      builder: (context, child) {
+        return ScrollConfiguration(
+          behavior: MyBehavior(),
+          child: child!,
+        );
+      },
       debugShowCheckedModeBanner: false,
       title: 'parkir',
       theme: ThemeData(

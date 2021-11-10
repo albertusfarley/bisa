@@ -1,22 +1,36 @@
 class Parking {
-  final String name;
-  final String category;
-  final String address;
-  final String call;
-  final String thumbnail;
-  final String url;
-  final Map hours;
-  final Map days;
-  final Map coordinates;
+  final Map parking;
+  late String id;
+  late String name;
+  late String category;
+  late String address;
+  late String call;
+  late String thumbnail;
+  late String url;
+  late String map;
+  late Map rates;
+  late Map hours;
+  late List days;
+  late Map coordinates;
+  late List photos;
+  late Map times;
+  late bool verified;
 
-  Parking(
-      {required this.name,
-      required this.category,
-      required this.address,
-      required this.call,
-      required this.thumbnail,
-      required this.url,
-      required this.hours,
-      required this.days,
-      required this.coordinates});
+  Parking({required this.parking}) {
+    id = parking['id'];
+    name = parking['name'];
+    category = parking['category'];
+    address = parking['address'];
+    call = parking['call'];
+    url = parking['url'];
+    map = parking['map'];
+    rates = parking['rates'];
+    thumbnail = parking['thumbnail'];
+    hours = parking['hours'];
+    days = parking['days'];
+    coordinates = parking['coordinates'];
+    photos = parking['photos'];
+    times = parking['times'];
+    verified = parking['verified'];
+  }
 }
