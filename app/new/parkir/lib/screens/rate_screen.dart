@@ -6,6 +6,7 @@ import 'package:ionicons/ionicons.dart';
 import 'package:parkir/constants/colors.dart';
 import 'package:parkir/constants/padding.dart';
 import 'package:parkir/constants/shadow.dart';
+import 'package:parkir/models/parking_name.dart';
 import 'package:parkir/models/review.dart';
 import 'package:parkir/services/auth.dart';
 import 'package:parkir/services/database.dart';
@@ -44,8 +45,7 @@ class _RateScreenState extends State<RateScreen> {
 
       int date = DateTime.now().millisecondsSinceEpoch;
 
-      DatabaseService()
-          .setReviews(
+      DatabaseService().setReviews(
         id: widget.id,
         review: Review(reviewID: date.toString(), raw: {
           'email': _auth.user!.email,
@@ -56,10 +56,8 @@ class _RateScreenState extends State<RateScreen> {
           'review': text
         }),
         rates: widget.rates,
-      )
-          .then((value) {
-        Get.back();
-      });
+      );
+      Get.back();
     }
   }
 
@@ -69,7 +67,13 @@ class _RateScreenState extends State<RateScreen> {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
-          title: Text(widget.name),
+          title: ParkingName(raw: widget.name).widget(size: 16),
+          leading: IconButton(
+              onPressed: () => Get.back(),
+              icon: Icon(
+                Icons.arrow_back,
+                size: 20,
+              )),
           backgroundColor: white,
           elevation: 0,
         ),
@@ -109,6 +113,7 @@ class _RateScreenState extends State<RateScreen> {
                   width: double.infinity,
                   padding: EdgeInsets.symmetric(vertical: verticalItemPadding),
                   child: StarBar(
+                      fixed: false,
                       rate: widget.rate,
                       size: 40,
                       spacing: Get.width / 32,

@@ -4,18 +4,18 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 class StarBar extends StatelessWidget {
   final double rate;
   final double size;
-  final Function(double) onUpdate;
-  bool fixed;
-  bool half;
-  double spacing;
+  Function(double)? onUpdate;
+  final bool fixed;
+  final bool half;
+  final double spacing;
 
   StarBar(
       {required this.rate,
       required this.size,
-      this.fixed = false,
+      this.fixed = true,
       this.spacing = 0,
       this.half = false,
-      required this.onUpdate,
+      this.onUpdate,
       Key? key})
       : super(key: key);
 
@@ -32,12 +32,12 @@ class StarBar extends StatelessWidget {
       itemCount: 5,
       itemPadding: EdgeInsets.symmetric(horizontal: spacing),
       itemBuilder: (context, _) => const Icon(
-        Icons.star,
-        color: Colors.amber,
+        Icons.star_rounded,
+        color: Colors.orange,
       ),
-      glowColor: Colors.amber,
+      glowColor: Colors.orange,
       unratedColor: Colors.grey[300],
-      onRatingUpdate: (rate) => onUpdate(rate),
+      onRatingUpdate: onUpdate == null ? (rate) {} : (rate) => onUpdate!(rate),
     );
   }
 }

@@ -54,9 +54,7 @@ class _DashboardState extends State<Dashboard> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       customText(
-                          text: 'Hi, ${_auth.user!.name!}!',
-                          size: 12,
-                          color: grey),
+                          text: 'Hi, ${_auth.user!.name!}!', color: grey),
                       const SizedBox(
                         height: 4,
                       ),
@@ -137,8 +135,8 @@ class _DashboardState extends State<Dashboard> {
                                 TextSpan(text: 'Parking locations for you '),
                                 WidgetSpan(
                                     child: Icon(
-                                  Icons.star,
-                                  color: Colors.amberAccent,
+                                  Icons.local_parking,
+                                  color: Colors.blueAccent,
                                   size: 16,
                                 ))
                               ]),

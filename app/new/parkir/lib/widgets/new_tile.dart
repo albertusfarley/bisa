@@ -4,11 +4,11 @@ import 'package:parkir/constants/colors.dart';
 import 'package:parkir/constants/shadow.dart';
 
 import 'package:parkir/models/parking.dart';
+import 'package:parkir/models/parking_name.dart';
 import 'package:parkir/screens/parking_details.dart';
 import 'package:parkir/widgets/custom_shimmer.dart';
 import 'package:parkir/widgets/custom_text.dart';
 import 'package:parkir/widgets/is_open.dart';
-import 'package:parkir/widgets/parking_name.dart';
 
 class NewTile extends StatelessWidget {
   final Parking? parking;
@@ -57,12 +57,8 @@ class NewTile extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          parkingName(
-                              name: parking!.name,
-                              verified: parking!.verified,
-                              color: white,
-                              iconColor: white,
-                              size: 14),
+                          ParkingName(raw: parking!.name)
+                              .widget(color: white, iconColor: white, size: 14),
                           const SizedBox(
                             height: 2,
                           ),
@@ -78,7 +74,7 @@ class NewTile extends StatelessWidget {
                             horizontal: 10, vertical: 5),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
-                          color: white.withOpacity(.9),
+                          color: white,
                         ),
                         child: Center(
                           child: customText(

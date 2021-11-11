@@ -32,12 +32,7 @@ class Rates extends StatelessWidget {
                   Column(
                     children: [
                       customText(text: rate.toString(), size: 32),
-                      StarBar(
-                          rate: rate,
-                          size: 16,
-                          fixed: true,
-                          half: true,
-                          onUpdate: (rate) {}),
+                      StarBar(rate: rate, size: 16, fixed: true, half: true),
                       customText(text: '($totalReviews)', color: grey)
                     ],
                   ),
@@ -59,7 +54,7 @@ class Rates extends StatelessWidget {
                                         heightFactor: 1,
                                         widthFactor: e.value / mostRate,
                                         child: Container(
-                                          color: Colors.amber,
+                                          color: Colors.orange,
                                         ),
                                       ),
                                     ),

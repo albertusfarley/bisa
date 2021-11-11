@@ -32,6 +32,7 @@ class AskRate extends StatelessWidget {
               rate: 0,
               size: 32,
               spacing: Get.width / 64,
+              fixed: false,
               onUpdate: (rate) {
                 Get.to(
                     () => RateScreen(

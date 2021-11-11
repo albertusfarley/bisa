@@ -103,7 +103,7 @@ class ReviewTile extends StatelessWidget {
           ),
           Row(
             children: [
-              StarBar(rate: review.rate, size: 16, onUpdate: (rate) {}),
+              StarBar(rate: review.rate, size: 16),
               horizontalItemSpacer(half: true),
               customText(
                   text: timeago

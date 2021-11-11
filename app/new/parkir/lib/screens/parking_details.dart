@@ -13,6 +13,8 @@ import 'package:parkir/constants/padding.dart';
 import 'package:parkir/controllers/my_controller.dart';
 import 'package:parkir/models/bar_data.dart';
 import 'package:parkir/models/parking.dart';
+import 'package:parkir/models/parking_name.dart';
+import 'package:parkir/screens/posts.dart';
 import 'package:parkir/screens/rate_screen.dart';
 import 'package:parkir/screens/reviews.dart';
 import 'package:parkir/services/database.dart';
@@ -27,10 +29,10 @@ import 'package:parkir/widgets/custom_text.dart';
 import 'package:parkir/widgets/distance_text.dart';
 import 'package:parkir/widgets/is_open.dart';
 import 'package:parkir/widgets/loading.dart';
-import 'package:parkir/widgets/parking_name.dart';
 import 'package:parkir/widgets/photos_view.dart';
 import 'package:parkir/widgets/rates.dart';
 import 'package:parkir/widgets/rounded_button.dart';
+import 'package:parkir/widgets/star_bar.dart';
 import 'package:parkir/widgets/tile_button.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -84,8 +86,27 @@ class _ParkingDetailsState extends State<ParkingDetails>
                           (BuildContext context, bool innerBoxIsScrolled) {
                         return <Widget>[
                           SliverToBoxAdapter(
-                              child: PhotosView(
-                            photos: parking.photos,
+                              child: Stack(
+                            children: [
+                              PhotosView(
+                                photos: parking.photos,
+                              ),
+                              Positioned(
+                                top: 20,
+                                left: horizontalItemPadding,
+                                child: ClipOval(
+                                  child: Container(
+                                    height: 40,
+                                    width: 40,
+                                    color: Colors.white,
+                                    alignment: Alignment.center,
+                                    child: IconButton(
+                                        onPressed: () => Get.back(),
+                                        icon: Icon(Icons.arrow_back, size: 20)),
+                                  ),
+                                ),
+                              )
+                            ],
                           )),
                           SliverToBoxAdapter(
                             child: Column(
@@ -97,28 +118,39 @@ class _ParkingDetailsState extends State<ParkingDetails>
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      parkingName(
-                                          name: parking.name,
-                                          verified: parking.verified,
-                                          size: 20,
-                                          weight: FontWeight.w900),
+                                      ParkingName(raw: parking.name).widget(
+                                          size: 20, weight: FontWeight.w900),
                                       const SizedBox(
-                                        height: 10,
+                                        height: 6,
                                       ),
                                       Row(
                                         children: [
-                                          const Icon(
-                                            Ionicons.car,
-                                            color: primary,
-                                            size: 18,
-                                          ),
+                                          StarBar(rate: parking.rate, size: 16),
                                           customText(
-                                              text: ' · ', color: darkGrey),
+                                              text:
+                                                  ' (${Tools.totalReviews(rates: parking.rates)})',
+                                              color: darkGrey)
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        height: 6,
+                                      ),
+                                      Row(
+                                        children: [
                                           customText(
                                               text: parking.category,
                                               color: darkGrey),
-                                          customText(
-                                              text: ' · ', color: darkGrey),
+                                          Row(
+                                            children: [
+                                              customText(text: ' · '),
+                                              const Icon(
+                                                Icons.drive_eta_rounded,
+                                                color: darkGrey,
+                                                size: 16,
+                                              ),
+                                            ],
+                                          ),
+                                          customText(text: ' '),
                                           Obx(() {
                                             Map? myPosition =
                                                 myController.myPosition.value;
@@ -133,7 +165,7 @@ class _ParkingDetailsState extends State<ParkingDetails>
                                         ],
                                       ),
                                       const SizedBox(
-                                        height: 10,
+                                        height: 6,
                                       ),
                                       Row(
                                         children: [
@@ -207,7 +239,7 @@ class _ParkingDetailsState extends State<ParkingDetails>
                                   text: 'Reviews',
                                 ),
                                 Tab(
-                                  text: 'Photos',
+                                  text: 'Posts',
                                 )
                               ],
                             ),
@@ -289,21 +321,25 @@ class _ParkingDetailsState extends State<ParkingDetails>
                                       id: parking.id,
                                       name: parking.name,
                                       rates: parking.rates),
-                                  ListView(
-                                    shrinkWrap: true,
-                                    physics: const ClampingScrollPhysics(),
-                                    children: [
-                                      for (String photo in parking.photos)
-                                        Container(
-                                          padding:
-                                              const EdgeInsets.only(bottom: 8),
-                                          child: Image.network(
-                                            photo,
-                                            fit: BoxFit.contain,
-                                          ),
-                                        )
-                                    ],
-                                  ),
+                                  Posts(
+                                      id: parking.id,
+                                      name: parking.name,
+                                      thumbnail: parking.thumbnail)
+                                  // ListView(
+                                  //   shrinkWrap: true,
+                                  //   physics: const ClampingScrollPhysics(),
+                                  //   children: [
+                                  //     for (String photo in parking.photos)
+                                  //       Container(
+                                  //         padding:
+                                  //             const EdgeInsets.only(bottom: 8),
+                                  //         child: Image.network(
+                                  //           photo,
+                                  //           fit: BoxFit.contain,
+                                  //         ),
+                                  //       )
+                                  //   ],
+                                  // ),
                                 ]),
                           )
                         ],

@@ -16,8 +16,7 @@ class DatabaseService {
   Stream<DocumentSnapshot> getLocationStream(String id) =>
       locationsCollection.doc(id).snapshots();
 
-  // Stream<QuerySnapshot> getReviews(String id) =>
-  //     locationsCollection.doc(id).collection('reviews').snapshots();
+  Stream<QuerySnapshot> getLocationsStream() => locationsCollection.snapshots();
 
   Stream<DocumentSnapshot> getReviews({required String id}) =>
       locationsCollection.doc(id).collection('data').doc('reviews').snapshots();
@@ -38,6 +37,11 @@ class DatabaseService {
         .limit(3)
         .get();
     return snapshot.docs.map((doc) => doc.data()).toList();
+  }
+
+  Future<DocumentSnapshot<Map<String, dynamic>>> getLocationPosts(
+      {required String id}) {
+    return locationsCollection.doc(id).collection('data').doc('posts').get();
   }
 
   Future updateRating(

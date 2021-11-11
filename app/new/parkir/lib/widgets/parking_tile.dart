@@ -3,14 +3,16 @@ import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:parkir/constants/colors.dart';
 import 'package:parkir/constants/padding.dart';
+import 'package:parkir/constants/shadow.dart';
 import 'package:parkir/controllers/my_controller.dart';
 import 'package:parkir/models/parking.dart';
+import 'package:parkir/models/parking_name.dart';
 import 'package:parkir/screens/parking_details.dart';
 import 'package:parkir/widgets/custom_shimmer.dart';
 import 'package:parkir/widgets/custom_text.dart';
 import 'package:parkir/widgets/distance_text.dart';
 import 'package:parkir/widgets/is_open.dart';
-import 'package:parkir/widgets/parking_name.dart';
+import 'package:parkir/widgets/star_bar.dart';
 
 class ParkingTile extends StatelessWidget {
   final Parking? parking;
@@ -20,7 +22,7 @@ class ParkingTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const double imageHeight = 80.0;
-    const double imageWidth = 80.0;
+    const double imageWidth = 100.0;
 
     MyController myController = Get.find();
 
@@ -57,57 +59,94 @@ class ParkingTile extends StatelessWidget {
         : GestureDetector(
             onTap: () => Get.to(() => ParkingDetails(id: parking!.id)),
             child: Container(
-              height: imageHeight,
+              height: imageHeight + 12,
               width: Get.width,
               color: white,
               margin: EdgeInsets.symmetric(horizontal: horizontalPadding),
+              // alignment: Alignment.center,
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16)),
-                    elevation: 4,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: Image.network(
-                        parking!.thumbnail,
-                        fit: BoxFit.cover,
-                        height: imageHeight,
-                        width: imageWidth,
-                      ),
+                  Container(
+                    height: double.infinity,
+                    width: imageWidth,
+                    child: Stack(
+                      children: [
+                        Positioned(
+                          top: 0,
+                          child: Container(
+                            height: imageHeight,
+                            width: imageWidth,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(16),
+                                boxShadow: listShadow),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(16),
+                              child: Image.network(
+                                parking!.thumbnail,
+                                fit: BoxFit.fitWidth,
+                                height: imageHeight,
+                                width: imageWidth,
+                              ),
+                            ),
+                          ),
+                        ),
+                        if (parking!.rate > 0)
+                          Positioned(
+                            right: 20,
+                            left: 20,
+                            bottom: 0,
+                            child: Container(
+                              height: 24,
+                              decoration: BoxDecoration(
+                                color: white,
+                                boxShadow: listShadow,
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                              alignment: Alignment.center,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.star_rounded,
+                                      color: Colors.orange, size: 18),
+                                  customText(
+                                    text:
+                                        ' ' + parking!.rate.toStringAsFixed(1),
+                                    weight: FontWeight.bold,
+                                  )
+                                ],
+                              ),
+                            ),
+                          )
+                      ],
                     ),
                   ),
                   const SizedBox(
-                    width: horizontalItemPadding,
+                    width: horizontalItemPadding + 4,
                   ),
                   Expanded(
                     child: Container(
+                      padding: EdgeInsets.only(
+                          bottom:
+                              12), // biar rata sama gambar ketika tidak ada rate
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          parkingName(
-                              name: parking!.name, verified: parking!.verified),
+                          ParkingName(raw: parking!.name).widget(),
                           Row(
                             children: [
-                              const Icon(
-                                Ionicons.car,
-                                color: primary,
-                                size: 14,
-                              ),
-                              customText(text: ' · ', color: darkGrey),
                               customText(
                                   text: parking!.category, color: darkGrey),
-                              customText(text: ' · ', color: darkGrey),
-                              Obx(() {
-                                Map? myPosition = myController.myPosition.value;
+                              // Obx(() {
+                              //   Map? myPosition = myController.myPosition.value;
 
-                                return myPosition == null
-                                    ? SizedBox.shrink()
-                                    : DistanceText(
-                                        mine: myPosition,
-                                        target: parking!.coordinates);
-                              }),
+                              //   return myPosition == null
+                              //       ? SizedBox.shrink()
+                              //       : DistanceText(
+                              //           mine: myPosition,
+                              //           target: parking!.coordinates);
+                              // }),
                             ],
                           ),
                           IsOpen(hours: parking!.hours, days: parking!.days),

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-const double horizontalPadding = 16.0;
+const double horizontalPadding = 20.0;
 const double verticalPadding = 24.0;
 const double horizontalItemPadding = 16.0;
 const double verticalItemPadding = 24.0;

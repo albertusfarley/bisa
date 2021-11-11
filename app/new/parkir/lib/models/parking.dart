@@ -8,13 +8,13 @@ class Parking {
   late String thumbnail;
   late String url;
   late String map;
+  late double rate;
   late Map rates;
   late Map hours;
   late List days;
   late Map coordinates;
   late List photos;
   late Map times;
-  late bool verified;
 
   Parking({required this.parking}) {
     id = parking['id'];
@@ -24,6 +24,7 @@ class Parking {
     call = parking['call'];
     url = parking['url'];
     map = parking['map'];
+    rate = parking['rate'];
     rates = parking['rates'];
     thumbnail = parking['thumbnail'];
     hours = parking['hours'];
@@ -31,6 +32,5 @@ class Parking {
     coordinates = parking['coordinates'];
     photos = parking['photos'];
     times = parking['times'];
-    verified = parking['verified'];
   }
 }

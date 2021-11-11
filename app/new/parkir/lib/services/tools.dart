@@ -16,9 +16,15 @@ class Tools {
       .toInt();
 
   static double ratesAverage({required Map rates}) {
-    double newRate = totalRates(rates: rates) / totalReviews(rates: rates);
+    int reviews = totalReviews(rates: rates);
 
-    return double.parse(newRate.toStringAsFixed(1));
+    if (reviews > 0) {
+      double newRate = totalRates(rates: rates) / totalReviews(rates: rates);
+
+      return double.parse(newRate.toStringAsFixed(1));
+    } else {
+      return .0;
+    }
   }
 
   static int mostRate({required Map rates}) =>
