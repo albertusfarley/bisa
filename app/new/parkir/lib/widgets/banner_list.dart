@@ -7,15 +7,10 @@ import 'package:parkir/widgets/banner_tile.dart';
 import 'package:shimmer/shimmer.dart';
 
 class BannerList extends StatefulWidget {
-  final List rawBanners;
-  final bool isShimmer;
+  final List? rawBanners;
   final double initialPadding;
 
-  const BannerList(
-      {required this.rawBanners,
-      this.initialPadding = 24,
-      this.isShimmer = false,
-      Key? key})
+  const BannerList({this.rawBanners, this.initialPadding = 24, Key? key})
       : super(key: key);
 
   @override
@@ -28,44 +23,46 @@ class _BannerListState extends State<BannerList> {
     CarouselController bannerController = CarouselController();
     List<Widget> banners = [];
 
-    for (var item in widget.rawBanners) {
+    if (widget.rawBanners == null) {
+      return Container(
+        height: Get.width / 2,
+        width: Get.width,
+        margin: const EdgeInsets.only(top: 16),
+        child: Shimmer.fromColors(
+            child: Container(
+              margin: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                // boxShadow: listShadow,
+                color: white,
+              ),
+            ),
+            baseColor: lightGrey,
+            highlightColor: Colors.grey[100]!),
+      );
+    }
+
+    for (var item in widget.rawBanners!) {
       banners.add(BannerTile(
           banner: MyBanner(
               imageURL: item['image_url'], hyperlink: item['hyperlink'])));
     }
 
-    return widget.isShimmer
-        ? Container(
-            height: Get.width / 2,
-            width: Get.width,
-            margin: const EdgeInsets.only(top: 16),
-            child: Shimmer.fromColors(
-                child: Container(
-                  margin: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    // boxShadow: listShadow,
-                    color: white,
-                  ),
-                ),
-                baseColor: lightGrey,
-                highlightColor: Colors.grey[100]!),
-          )
-        : Container(
-            padding: const EdgeInsets.only(top: 16),
-            // color: white,
-            child: CarouselSlider(
-              items: banners,
-              carouselController: bannerController,
-              options: CarouselOptions(
-                disableCenter: false,
-                enableInfiniteScroll: false,
-                autoPlay: true,
-                autoPlayInterval: const Duration(seconds: 10),
-                viewportFraction: 1,
-                aspectRatio: 2,
-                initialPage: 0,
-              ),
-            ),
-          );
+    return Container(
+      padding: const EdgeInsets.only(top: 16),
+      // color: white,
+      child: CarouselSlider(
+        items: banners,
+        carouselController: bannerController,
+        options: CarouselOptions(
+          disableCenter: false,
+          enableInfiniteScroll: false,
+          autoPlay: true,
+          autoPlayInterval: const Duration(seconds: 10),
+          viewportFraction: 1,
+          aspectRatio: 2,
+          initialPage: 0,
+        ),
+      ),
+    );
   }
 }

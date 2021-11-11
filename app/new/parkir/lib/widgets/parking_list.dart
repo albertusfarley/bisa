@@ -25,17 +25,15 @@ class ParkingList extends StatelessWidget {
     }
     return Container(
       color: white,
-      padding: EdgeInsets.symmetric(vertical: verticalItemPadding),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          for (Widget area in parkings)
-            Padding(
-              padding: const EdgeInsets.only(bottom: horizontalPadding),
-              child: area,
-            )
-        ],
-      ),
+      child: ListView.separated(
+          padding: EdgeInsets.symmetric(vertical: verticalItemPadding),
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemBuilder: (context, index) => parkings[index],
+          separatorBuilder: (context, index) => const SizedBox(
+                height: verticalPadding,
+              ),
+          itemCount: parkings.length),
     );
   }
 }

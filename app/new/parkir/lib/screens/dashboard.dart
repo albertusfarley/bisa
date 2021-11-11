@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -83,23 +84,24 @@ class _DashboardState extends State<Dashboard> {
               ),
             ),
             FutureBuilder(
-              future: Future.wait([
-                _db.getBannersCollection(),
-                _db.getNewLocationsCollection(),
-                _db.getLocationsCollection()
-              ]),
-              builder: (context, AsyncSnapshot<List<dynamic>> snapshots) {
-                if (snapshots.hasData) {
-                  List rawBanners = snapshots.data![0];
-                  List rawSuggestion = snapshots.data![1];
-                  List rawLocations = snapshots.data![2];
+                future: _db.getBannersCollection(),
+                builder: (context, AsyncSnapshot<List> snapshot) {
+                  List? rawBanners = snapshot.data;
+                  return BannerList(
+                    rawBanners: rawBanners,
+                  );
+                }),
+            StreamBuilder<QuerySnapshot>(
+                stream: _db.getLocationsStream(),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) return DashboardShimmer();
+
+                  List rawLocations =
+                      snapshot.data!.docs.map((doc) => doc.data()).toList();
 
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      BannerList(
-                        rawBanners: rawBanners,
-                      ),
                       Padding(
                         padding: const EdgeInsets.only(
                             left: horizontalPadding,
@@ -114,7 +116,7 @@ class _DashboardState extends State<Dashboard> {
                                 TextSpan(text: 'Our suggestions for you '),
                                 WidgetSpan(
                                     child: Icon(
-                                  Icons.local_fire_department,
+                                  Icons.local_fire_department_rounded,
                                   color: Colors.red,
                                   size: 16,
                                 ))
@@ -122,7 +124,7 @@ class _DashboardState extends State<Dashboard> {
                         ),
                       ),
                       NewList(
-                        locations: rawSuggestion,
+                        locations: rawLocations,
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(
@@ -135,8 +137,8 @@ class _DashboardState extends State<Dashboard> {
                                 TextSpan(text: 'Parking locations for you '),
                                 WidgetSpan(
                                     child: Icon(
-                                  Icons.local_parking,
-                                  color: Colors.blueAccent,
+                                  Icons.star_rounded,
+                                  color: Colors.orange,
                                   size: 16,
                                 ))
                               ]),
@@ -148,11 +150,7 @@ class _DashboardState extends State<Dashboard> {
                       verticalItemSpacer(),
                     ],
                   );
-                } else {
-                  return DashboardShimmer();
-                }
-              },
-            ),
+                })
           ],
         ));
   }

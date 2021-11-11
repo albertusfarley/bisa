@@ -13,10 +13,6 @@ class DashboardShimmer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const BannerList(
-          rawBanners: [],
-          isShimmer: true,
-        ),
         Container(
             padding: const EdgeInsets.only(
                 left: horizontalPadding,
