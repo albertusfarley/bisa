@@ -12,8 +12,9 @@ import 'package:parkir/constants/colors.dart';
 import 'package:parkir/constants/padding.dart';
 import 'package:parkir/controllers/my_controller.dart';
 import 'package:parkir/models/bar_data.dart';
-import 'package:parkir/models/parking.dart';
-import 'package:parkir/models/parking_name.dart';
+import 'package:parkir/models/location.dart';
+import 'package:parkir/models/location_name.dart';
+import 'package:parkir/screens/parking_screen.dart';
 import 'package:parkir/screens/posts.dart';
 import 'package:parkir/screens/rate_screen.dart';
 import 'package:parkir/screens/reviews.dart';
@@ -36,16 +37,16 @@ import 'package:parkir/widgets/star_bar.dart';
 import 'package:parkir/widgets/tile_button.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class ParkingDetails extends StatefulWidget {
+class LocationDetails extends StatefulWidget {
   final String id;
 
-  const ParkingDetails({required this.id, Key? key}) : super(key: key);
+  const LocationDetails({required this.id, Key? key}) : super(key: key);
 
   @override
-  _ParkingDetailsState createState() => _ParkingDetailsState();
+  _LocationDetailsState createState() => _LocationDetailsState();
 }
 
-class _ParkingDetailsState extends State<ParkingDetails>
+class _LocationDetailsState extends State<LocationDetails>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -73,14 +74,15 @@ class _ParkingDetailsState extends State<ParkingDetails>
             );
           }
 
-          Parking parking = Parking(parking: snapshot.data!.data() as Map);
+          Location parking = Location(location: snapshot.data!.data() as Map);
           bool rated = Tools.totalReviews(rates: parking.rates) > 0;
 
-          return SafeArea(
-            child: Scaffold(
-              key: _scaffoldKey,
-              body: Container(
-                  constraints: BoxConstraints.expand(),
+          return Scaffold(
+            key: _scaffoldKey,
+            backgroundColor: white,
+            body: SafeArea(
+              child: Container(
+                  constraints: const BoxConstraints.expand(),
                   child: NestedScrollView(
                       headerSliverBuilder:
                           (BuildContext context, bool innerBoxIsScrolled) {
@@ -92,7 +94,7 @@ class _ParkingDetailsState extends State<ParkingDetails>
                                 photos: parking.photos,
                               ),
                               Positioned(
-                                top: 20,
+                                top: verticalItemPadding,
                                 left: horizontalItemPadding,
                                 child: ClipOval(
                                   child: Container(
@@ -118,14 +120,17 @@ class _ParkingDetailsState extends State<ParkingDetails>
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      ParkingName(raw: parking.name).widget(
+                                      LocationName(raw: parking.name).widget(
                                           size: 20, weight: FontWeight.w900),
                                       const SizedBox(
                                         height: 6,
                                       ),
                                       Row(
                                         children: [
-                                          StarBar(rate: parking.rate, size: 16),
+                                          StarBar(
+                                              rate: parking.rate,
+                                              size: 16,
+                                              half: true),
                                           customText(
                                               text:
                                                   ' (${Tools.totalReviews(rates: parking.rates)})',
@@ -140,27 +145,12 @@ class _ParkingDetailsState extends State<ParkingDetails>
                                           customText(
                                               text: parking.category,
                                               color: darkGrey),
-                                          Row(
-                                            children: [
-                                              customText(text: ' · '),
-                                              const Icon(
-                                                Icons.drive_eta_rounded,
-                                                color: darkGrey,
-                                                size: 16,
-                                              ),
-                                            ],
-                                          ),
-                                          customText(text: ' '),
                                           Obx(() {
                                             Map? myPosition =
                                                 myController.myPosition.value;
 
-                                            return myPosition == null
-                                                ? SizedBox.shrink()
-                                                : DistanceText(
-                                                    mine: myPosition,
-                                                    target:
-                                                        parking.coordinates);
+                                            return DistanceText(
+                                                target: parking.coordinates);
                                           }),
                                         ],
                                       ),
@@ -191,7 +181,8 @@ class _ParkingDetailsState extends State<ParkingDetails>
                                             iconData: Ionicons.eye_outline,
                                             text: 'View',
                                             active: true,
-                                            onPressed: () {},
+                                            onPressed: () =>
+                                                Get.to(ParkingScreen()),
                                           ),
                                           RoundedButton(
                                             iconData: Ionicons.navigate_outline,

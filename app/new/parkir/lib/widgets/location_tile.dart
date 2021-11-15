@@ -5,19 +5,19 @@ import 'package:parkir/constants/colors.dart';
 import 'package:parkir/constants/padding.dart';
 import 'package:parkir/constants/shadow.dart';
 import 'package:parkir/controllers/my_controller.dart';
-import 'package:parkir/models/parking.dart';
-import 'package:parkir/models/parking_name.dart';
-import 'package:parkir/screens/parking_details.dart';
+import 'package:parkir/models/location.dart';
+import 'package:parkir/models/location_name.dart';
+import 'package:parkir/screens/location_details.dart';
 import 'package:parkir/widgets/custom_shimmer.dart';
 import 'package:parkir/widgets/custom_text.dart';
 import 'package:parkir/widgets/distance_text.dart';
 import 'package:parkir/widgets/is_open.dart';
 import 'package:parkir/widgets/star_bar.dart';
 
-class ParkingTile extends StatelessWidget {
-  final Parking? parking;
+class LocationTile extends StatelessWidget {
+  final Location? location;
 
-  const ParkingTile({this.parking, Key? key}) : super(key: key);
+  const LocationTile({this.location, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class ParkingTile extends StatelessWidget {
 
     print('pos = ${myController.myPosition}');
 
-    return parking == null
+    return location == null
         ? Container(
             height: imageHeight,
             width: Get.width,
@@ -57,11 +57,10 @@ class ParkingTile extends StatelessWidget {
             ),
           )
         : GestureDetector(
-            onTap: () => Get.to(() => ParkingDetails(id: parking!.id)),
+            onTap: () => Get.to(() => LocationDetails(id: location!.id)),
             child: Container(
               height: imageHeight + 12,
               width: Get.width,
-              color: white,
               margin: EdgeInsets.symmetric(horizontal: horizontalPadding),
               // alignment: Alignment.center,
               child: Row(
@@ -83,7 +82,7 @@ class ParkingTile extends StatelessWidget {
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(16),
                               child: Image.network(
-                                parking!.thumbnail,
+                                location!.thumbnail,
                                 fit: BoxFit.fitWidth,
                                 height: imageHeight,
                                 width: imageWidth,
@@ -91,7 +90,7 @@ class ParkingTile extends StatelessWidget {
                             ),
                           ),
                         ),
-                        if (parking!.rate > 0)
+                        if (location!.rate > 0)
                           Positioned(
                             right: 20,
                             left: 20,
@@ -111,7 +110,7 @@ class ParkingTile extends StatelessWidget {
                                       color: Colors.orange, size: 18),
                                   customText(
                                     text:
-                                        ' ' + parking!.rate.toStringAsFixed(1),
+                                        ' ' + location!.rate.toStringAsFixed(1),
                                     weight: FontWeight.bold,
                                   )
                                 ],
@@ -133,11 +132,11 @@ class ParkingTile extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          ParkingName(raw: parking!.name).widget(),
+                          LocationName(raw: location!.name).widget(),
                           Row(
                             children: [
                               customText(
-                                  text: parking!.category, color: darkGrey),
+                                  text: location!.category, color: darkGrey),
                               // Obx(() {
                               //   Map? myPosition = myController.myPosition.value;
 
@@ -145,11 +144,11 @@ class ParkingTile extends StatelessWidget {
                               //       ? SizedBox.shrink()
                               //       : DistanceText(
                               //           mine: myPosition,
-                              //           target: parking!.coordinates);
+                              //           target: location!.coordinates);
                               // }),
                             ],
                           ),
-                          IsOpen(hours: parking!.hours, days: parking!.days),
+                          IsOpen(hours: location!.hours, days: location!.days),
                         ],
                       ),
                     ),

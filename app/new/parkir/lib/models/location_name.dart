@@ -3,12 +3,12 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:parkir/constants/colors.dart';
 
-class ParkingName {
+class LocationName {
   final String raw;
   late bool verified;
   late String text;
 
-  ParkingName({required this.raw}) {
+  LocationName({required this.raw}) {
     List nameList = raw.split('\\');
     text = nameList[0];
 

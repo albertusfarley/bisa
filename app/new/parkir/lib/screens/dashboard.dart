@@ -15,8 +15,8 @@ import 'package:parkir/services/auth.dart';
 import 'package:parkir/services/database.dart';
 import 'package:parkir/widgets/avatar.dart';
 import 'package:parkir/widgets/loading.dart';
-import 'package:parkir/widgets/parking_list.dart';
-import 'package:parkir/widgets/parking_tile.dart';
+import 'package:parkir/widgets/location_list.dart';
+import 'package:parkir/widgets/location_tile.dart';
 import 'package:parkir/widgets/banner_list.dart';
 import 'package:parkir/widgets/custom_text.dart';
 import 'package:parkir/widgets/new_list.dart';
@@ -31,8 +31,8 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   TextEditingController searchController = TextEditingController();
 
-  AuthController _auth = Get.find();
-  DatabaseService _db = DatabaseService();
+  final AuthController _auth = Get.find();
+  final DatabaseService _db = DatabaseService();
 
   @override
   Widget build(BuildContext context) {
@@ -83,14 +83,24 @@ class _DashboardState extends State<Dashboard> {
                 ],
               ),
             ),
-            FutureBuilder(
-                future: _db.getBannersCollection(),
-                builder: (context, AsyncSnapshot<List> snapshot) {
-                  List? rawBanners = snapshot.data;
+            const SizedBox(
+              height: 24,
+            ),
+            StreamBuilder<DocumentSnapshot>(
+                stream: _db.getBannersStream(),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) return BannerList();
+
+                  Map rawBanners =
+                      snapshot.data!.data() as Map<String, dynamic>;
                   return BannerList(
-                    rawBanners: rawBanners,
+                    rawBanners: rawBanners.values.toList()
+                      ..sort((b, a) => a['millis'].compareTo(b['millis'])),
                   );
                 }),
+            const SizedBox(
+              height: 16,
+            ),
             StreamBuilder<QuerySnapshot>(
                 stream: _db.getLocationsStream(),
                 builder: (context, snapshot) {
@@ -104,10 +114,9 @@ class _DashboardState extends State<Dashboard> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(
-                            left: horizontalPadding,
-                            right: horizontalPadding,
-                            bottom: 16,
-                            top: 8),
+                          left: horizontalPadding,
+                          right: horizontalPadding,
+                        ),
                         child: RichText(
                           text: TextSpan(
                               style: GoogleFonts.lexendDeca(
@@ -123,12 +132,18 @@ class _DashboardState extends State<Dashboard> {
                               ]),
                         ),
                       ),
+                      const SizedBox(
+                        height: 16,
+                      ),
                       NewList(
                         locations: rawLocations,
                       ),
+                      const SizedBox(
+                        height: 16,
+                      ),
                       Padding(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: horizontalPadding, vertical: 16),
+                            horizontal: horizontalPadding),
                         child: RichText(
                           text: TextSpan(
                               style: GoogleFonts.lexendDeca(
@@ -144,10 +159,13 @@ class _DashboardState extends State<Dashboard> {
                               ]),
                         ),
                       ),
-                      ParkingList(
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      LocationList(
                         locations: rawLocations,
                       ),
-                      verticalItemSpacer(),
+                      verticalSpacer()
                     ],
                   );
                 })

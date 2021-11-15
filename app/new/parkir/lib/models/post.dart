@@ -12,7 +12,7 @@ class Post {
       required this.thumbnail,
       required this.postRaw}) {
     caption = postRaw['caption'];
-    imageURL = postRaw['imageURL'];
+    imageURL = postRaw['image_url'];
     hyperlink = postRaw['hyperlink'];
     date = DateTime.fromMillisecondsSinceEpoch(postRaw['date']);
   }

@@ -3,8 +3,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:parkir/constants/colors.dart';
 import 'package:parkir/constants/padding.dart';
-import 'package:parkir/models/parking_name.dart';
+import 'package:parkir/models/location_name.dart';
 import 'package:parkir/models/post.dart';
+import 'package:parkir/widgets/custom_shimmer.dart';
 import 'package:parkir/widgets/custom_text.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:url_launcher/url_launcher.dart';
@@ -31,7 +32,7 @@ class PostTile extends StatelessWidget {
                 ),
               ),
               horizontalItemSpacer(),
-              ParkingName(raw: post.publisher).widget(),
+              LocationName(raw: post.publisher).widget(),
             ],
           ),
         ),
@@ -40,7 +41,14 @@ class PostTile extends StatelessWidget {
         ),
         AspectRatio(
           aspectRatio: 2,
-          child: Image.network(post.imageURL),
+          child: Image.network(
+            post.imageURL,
+            // loadingBuilder: (context, child, progress) {
+            //   if (progress == null) return child;
+            //   return CustomShimmer(
+            //       height: double.infinity, width: double.infinity);
+            // },
+          ),
         ),
         if (post.hyperlink != '')
           Container(
@@ -77,7 +85,7 @@ class PostTile extends StatelessWidget {
                       style: GoogleFonts.lexendDeca(color: dark),
                       children: [
                         TextSpan(
-                            text: ParkingName(raw: post.publisher).text + ' ',
+                            text: LocationName(raw: post.publisher).text + ' ',
                             style: TextStyle(fontWeight: FontWeight.bold)),
                         TextSpan(
                             text: post.caption,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:parkir/constants/padding.dart';
 import 'package:parkir/widgets/custom_shimmer.dart';
-import 'package:parkir/widgets/parking_list.dart';
+import 'package:parkir/widgets/location_list.dart';
 import 'package:parkir/widgets/banner_list.dart';
 import 'package:parkir/widgets/new_list.dart';
 
@@ -33,7 +33,7 @@ class DashboardShimmer extends StatelessWidget {
               height: 14,
               width: Get.width / 2,
             )),
-        ParkingList()
+        LocationList()
       ],
     );
   }

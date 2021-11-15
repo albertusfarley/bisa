@@ -6,7 +6,7 @@ import 'package:parkir/constants/padding.dart';
 import 'package:parkir/models/post.dart';
 import 'package:parkir/services/database.dart';
 import 'package:parkir/widgets/custom_text.dart';
-import 'package:parkir/widgets/parking_tile.dart';
+import 'package:parkir/widgets/location_tile.dart';
 import 'package:parkir/widgets/post_tile.dart';
 import 'package:timeago/timeago.dart' as timeago;
 

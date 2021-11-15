@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:parkir/constants/colors.dart';
+import 'package:parkir/constants/padding.dart';
 import 'package:parkir/models/my_banner.dart';
 import 'package:parkir/widgets/banner_tile.dart';
 import 'package:shimmer/shimmer.dart';
@@ -44,25 +45,41 @@ class _BannerListState extends State<BannerList> {
     for (var item in widget.rawBanners!) {
       banners.add(BannerTile(
           banner: MyBanner(
-              imageURL: item['image_url'], hyperlink: item['hyperlink'])));
+              imageURL: item['image_url'],
+              hyperlink: item['hyperlink'],
+              millis: item['millis'])));
+      if (item != widget.rawBanners!.last) {
+        banners.add(const SizedBox(
+          width: horizontalItemPadding,
+        ));
+      }
     }
 
-    return Container(
-      padding: const EdgeInsets.only(top: 16),
-      // color: white,
-      child: CarouselSlider(
-        items: banners,
-        carouselController: bannerController,
-        options: CarouselOptions(
-          disableCenter: false,
-          enableInfiniteScroll: false,
-          autoPlay: true,
-          autoPlayInterval: const Duration(seconds: 10),
-          viewportFraction: 1,
-          aspectRatio: 2,
-          initialPage: 0,
-        ),
+    return SingleChildScrollView(
+      physics: const BouncingScrollPhysics(),
+      padding: const EdgeInsets.symmetric(horizontal: horizontalItemPadding),
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: banners,
       ),
     );
+
+    // return Container(
+    //   padding: const EdgeInsets.only(top: 16),
+    //   // color: white,
+    //   child: CarouselSlider(
+    //     items: banners,
+    //     carouselController: bannerController,
+    //     options: CarouselOptions(
+    //       disableCenter: false,
+    //       enableInfiniteScroll: false,
+    //       autoPlay: true,
+    //       autoPlayInterval: const Duration(seconds: 10),
+    //       viewportFraction: 1,
+    //       aspectRatio: 2,
+    //       initialPage: 0,
+    //     ),
+    //   ),
+    // );
   }
 }

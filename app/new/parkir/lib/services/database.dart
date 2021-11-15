@@ -13,6 +13,9 @@ class DatabaseService {
   final CollectionReference locationsCollection =
       FirebaseFirestore.instance.collection('locations');
 
+  final CollectionReference globalCollection =
+      FirebaseFirestore.instance.collection('global');
+
   Stream<DocumentSnapshot> getLocationStream(String id) =>
       locationsCollection.doc(id).snapshots();
 
@@ -26,18 +29,21 @@ class DatabaseService {
     return snapshot.docs.map((doc) => doc.data()).toList();
   }
 
+  Stream<DocumentSnapshot> getBannersStream() =>
+      globalCollection.doc('banners').snapshots();
+
   Future<List> getLocationsCollection() async {
     QuerySnapshot snapshot = await locationsCollection.get();
     return snapshot.docs.map((doc) => doc.data()).toList();
   }
 
-  Future<List> getNewLocationsCollection() async {
-    QuerySnapshot snapshot = await locationsCollection
-        .orderBy('date', descending: true)
-        .limit(3)
-        .get();
-    return snapshot.docs.map((doc) => doc.data()).toList();
-  }
+  // Future<List> getNewLocationsCollection() async {
+  //   QuerySnapshot snapshot = await locationsCollection
+  //       .orderBy('date', descending: true)
+  //       .limit(3)
+  //       .get();
+  //   return snapshot.docs.map((doc) => doc.data()).toList();
+  // }
 
   Future<DocumentSnapshot<Map<String, dynamic>>> getLocationPosts(
       {required String id}) {
@@ -82,7 +88,7 @@ class DatabaseService {
       review.id: {
         'name': review.name,
         'email': review.email,
-        'photoURL': review.photoURL,
+        'photo_url': review.photoURL,
         'date': review.date,
         'rate': review.rate,
         'review': review.review,

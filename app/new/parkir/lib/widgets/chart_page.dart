@@ -61,8 +61,7 @@ class _ChartPageState extends State<ChartPage> {
                   }).toList(),
                   onChanged: (name) {
                     setState(() {
-                      print('jump! ${TimeUtils.days.indexOf(name!)} $name');
-                      _selectedDay = name;
+                      _selectedDay = name!;
                       _timesController.jumpToPage(TimeUtils.days.indexOf(name));
                     });
                   },

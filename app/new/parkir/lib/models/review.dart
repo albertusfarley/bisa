@@ -13,7 +13,7 @@ class Review {
     id = reviewID;
     email = raw['email'];
     name = raw['name'];
-    photoURL = raw['photoURL'];
+    photoURL = raw['photo_url'];
     date = raw['date'];
     rate = raw['rate'];
     review = raw['review'];

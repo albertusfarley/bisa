@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:parkir/constants/colors.dart';
 import 'package:parkir/constants/padding.dart';
-import 'package:parkir/models/parking.dart';
+import 'package:parkir/models/location.dart';
 import 'package:parkir/screens/see_locations.dart';
 import 'package:parkir/services/database.dart';
 import 'package:parkir/widgets/new_tile.dart';
@@ -20,47 +20,42 @@ class NewList extends StatelessWidget {
     List<Widget> parkings = [];
 
     if (locations == null) {
-      parkings = [NewTile(), NewTile()];
+      parkings = [
+        horizontalItemSpacer(),
+        NewTile(),
+        horizontalItemSpacer(),
+        NewTile(),
+        horizontalItemSpacer()
+      ];
 
       return Container(
-        color: white,
-        child: SizedBox(
-          height: 200 + (verticalItemPadding * 2),
-          width: double.infinity,
-          child: ListView.separated(
+          color: white,
+          child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
-              itemBuilder: (_, index) => Padding(
-                  padding: EdgeInsets.only(
-                      left: index == 0 ? horizontalPadding : 0,
-                      right:
-                          index == parkings.length - 1 ? horizontalPadding : 0),
-                  child: parkings[index]),
-              separatorBuilder: (_, index) => horizontalItemSpacer(),
-              itemCount: parkings.length),
-        ),
-      );
+              child: Row(
+                children: parkings,
+              )));
     } else {
+      parkings.add(horizontalItemSpacer());
       for (var item in locations!) {
-        parkings.add(NewTile(parking: Parking(parking: item)));
+        parkings.add(NewTile(parking: Location(location: item)));
+        parkings.add(horizontalItemSpacer());
       }
 
       parkings.add(const RequestTile());
+      parkings.add(horizontalItemSpacer());
 
       return Container(
         color: white,
-        child: SizedBox(
-          height: 200 + (verticalItemPadding * 2),
-          width: double.infinity,
-          child: ListView.separated(
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (_, index) => Padding(
-                  padding: EdgeInsets.only(
-                      left: index == 0 ? horizontalPadding : 0,
-                      right:
-                          index == parkings.length - 1 ? horizontalPadding : 0),
-                  child: parkings[index]),
-              separatorBuilder: (_, index) => horizontalItemSpacer(),
-              itemCount: parkings.length),
+        width: Get.width,
+        padding: EdgeInsets.symmetric(vertical: verticalItemPadding),
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: parkings,
+          ),
         ),
       );
     }

@@ -19,21 +19,24 @@ class MyController extends GetxController {
 
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      return Future.error('Location services are disabled.');
+      // return Future.error('Location services are disabled.');
+      return myPosition.value = null;
     }
 
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        return Future.error('Location permissions are denied');
+        // return Future.error('Location permissions are denied');
+        return myPosition.value = null;
       }
     }
 
     if (permission == LocationPermission.deniedForever) {
       // Permissions are denied forever, handle appropriately.
-      return Future.error(
-          'Location permissions are permanently denied, we cannot request permissions.');
+      // return Future.error(
+      //     'Location permissions are permanently denied, we cannot request permissions.');
+      return myPosition.value = null;
     }
 
     Position result = await Geolocator.getCurrentPosition();

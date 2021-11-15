@@ -37,39 +37,40 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: _widgetOptions.elementAt(_selectedIndex),
-        bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: Colors.white,
-          fixedColor: white,
-          selectedIconTheme: IconThemeData(color: primary),
-          unselectedIconTheme: IconThemeData(color: grey),
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
-          type: BottomNavigationBarType.fixed,
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined),
-              label: 'Dashboard',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.search),
-              label: 'Business',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.notifications_outlined),
-              label: 'School',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person_outline),
-              label: 'Settings',
-            ),
-          ],
-          currentIndex: _selectedIndex,
-          onTap: _onItemTapped,
-        ),
+    return Scaffold(
+      backgroundColor: white,
+      body: SafeArea(
+        child: _widgetOptions.elementAt(_selectedIndex),
       ),
+      // bottomNavigationBar: BottomNavigationBar(
+      //   backgroundColor: Colors.white,
+      //   fixedColor: white,
+      //   selectedIconTheme: IconThemeData(color: primary),
+      //   unselectedIconTheme: IconThemeData(color: grey),
+      //   showSelectedLabels: false,
+      //   showUnselectedLabels: false,
+      //   type: BottomNavigationBarType.fixed,
+      //   items: const <BottomNavigationBarItem>[
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.home_outlined),
+      //       label: 'Dashboard',
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.search),
+      //       label: 'Business',
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.notifications_outlined),
+      //       label: 'School',
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.person_outline),
+      //       label: 'Settings',
+      //     ),
+      //   ],
+      //   currentIndex: _selectedIndex,
+      //   onTap: _onItemTapped,
+      // ),
     );
   }
 }

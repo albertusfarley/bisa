@@ -32,9 +32,9 @@ class Tools {
 
   static void toastMessage({required String text}) {
     Get.showSnackbar(GetBar(
-      duration: const Duration(seconds: 4),
+      duration: const Duration(seconds: 3),
       message: text,
-      animationDuration: const Duration(seconds: 1),
+      animationDuration: const Duration(milliseconds: 250),
     ));
   }
 }

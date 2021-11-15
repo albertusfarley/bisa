@@ -6,7 +6,7 @@ import 'package:ionicons/ionicons.dart';
 import 'package:parkir/constants/colors.dart';
 import 'package:parkir/constants/padding.dart';
 import 'package:parkir/constants/shadow.dart';
-import 'package:parkir/models/parking_name.dart';
+import 'package:parkir/models/location_name.dart';
 import 'package:parkir/models/review.dart';
 import 'package:parkir/services/auth.dart';
 import 'package:parkir/services/database.dart';
@@ -50,7 +50,7 @@ class _RateScreenState extends State<RateScreen> {
         review: Review(reviewID: date.toString(), raw: {
           'email': _auth.user!.email,
           'name': _auth.user!.name,
-          'photoURL': _auth.user!.photoURL,
+          'photo_url': _auth.user!.photoURL,
           'date': date,
           'rate': widget.rate,
           'review': text
@@ -63,112 +63,107 @@ class _RateScreenState extends State<RateScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          title: ParkingName(raw: widget.name).widget(size: 16),
-          leading: IconButton(
-              onPressed: () => Get.back(),
-              icon: Icon(
-                Icons.arrow_back,
-                size: 20,
-              )),
-          backgroundColor: white,
-          elevation: 0,
-        ),
-        body: Container(
-            padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
-            constraints: const BoxConstraints.expand(),
-            child: ListView(
-              children: [
-                Row(
-                  children: [
-                    Avatar(),
-                    horizontalItemSpacer(),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        customText(text: _auth.user!.name!),
-                        Row(
-                          children: [
-                            customText(
-                                text: 'Posting Publicly ',
-                                size: 12,
-                                color: grey),
-                            const Icon(
-                              Ionicons.globe_outline,
-                              color: grey,
-                              size: 12,
-                            )
-                          ],
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-                verticalSpacer(),
-                Container(
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        title: LocationName(raw: widget.name).widget(size: 16),
+        leading: IconButton(
+            onPressed: () => Get.back(),
+            icon: Icon(
+              Icons.arrow_back,
+              size: 20,
+            )),
+        backgroundColor: white,
+        elevation: 0,
+      ),
+      body: Container(
+          padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+          constraints: const BoxConstraints.expand(),
+          child: ListView(
+            children: [
+              Row(
+                children: [
+                  Avatar(),
+                  horizontalItemSpacer(),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      customText(text: _auth.user!.name!),
+                      Row(
+                        children: [
+                          customText(
+                              text: 'Posting Publicly ', size: 12, color: grey),
+                          const Icon(
+                            Ionicons.globe_outline,
+                            color: grey,
+                            size: 12,
+                          )
+                        ],
+                      ),
+                    ],
+                  )
+                ],
+              ),
+              verticalSpacer(),
+              Container(
+                alignment: Alignment.center,
+                width: double.infinity,
+                padding: EdgeInsets.symmetric(vertical: verticalItemPadding),
+                child: StarBar(
+                    fixed: false,
+                    rate: widget.rate,
+                    size: 40,
+                    spacing: Get.width / 32,
+                    onUpdate: (rate) {
+                      setState(() {
+                        widget.rate = rate;
+                      });
+                    }),
+              ),
+              verticalSpacer(),
+              customText(text: 'Share more about your experience'),
+              verticalItemSpacer(half: true),
+              TextField(
+                controller: _reviewController,
+                keyboardType: TextInputType.multiline,
+                textInputAction: TextInputAction.send,
+                onSubmitted: (text) => postReview(_reviewController.text),
+                maxLines: 5,
+                minLines: 5,
+                maxLength: 240,
+                decoration: InputDecoration(
+                    contentPadding:
+                        EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                    hintStyle: TextStyle(fontSize: 14, color: Colors.grey[400]),
+                    hintMaxLines: 5,
+                    hintText:
+                        'Write your parking experience in this location...',
+                    border: OutlineInputBorder(
+                        borderSide: BorderSide(color: grey),
+                        borderRadius: BorderRadius.circular(8)),
+                    enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: grey),
+                        borderRadius: BorderRadius.circular(8))),
+              ),
+              verticalItemSpacer(),
+              GestureDetector(
+                onTap: () {
+                  postReview(_reviewController.text);
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: primary,
+                      borderRadius: BorderRadius.circular(8),
+                      boxShadow: listShadow),
                   alignment: Alignment.center,
                   width: double.infinity,
-                  padding: EdgeInsets.symmetric(vertical: verticalItemPadding),
-                  child: StarBar(
-                      fixed: false,
-                      rate: widget.rate,
-                      size: 40,
-                      spacing: Get.width / 32,
-                      onUpdate: (rate) {
-                        setState(() {
-                          widget.rate = rate;
-                        });
-                      }),
+                  height: 48,
+                  child: customText(
+                      text: 'Post', weight: FontWeight.bold, color: white),
                 ),
-                verticalSpacer(),
-                customText(text: 'Share more about your experience'),
-                verticalItemSpacer(half: true),
-                TextField(
-                  controller: _reviewController,
-                  keyboardType: TextInputType.multiline,
-                  textInputAction: TextInputAction.send,
-                  onSubmitted: (text) => postReview(_reviewController.text),
-                  maxLines: 5,
-                  minLines: 5,
-                  maxLength: 240,
-                  decoration: InputDecoration(
-                      contentPadding:
-                          EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-                      hintStyle:
-                          TextStyle(fontSize: 14, color: Colors.grey[400]),
-                      hintMaxLines: 5,
-                      hintText:
-                          'Write your parking experience in this location...',
-                      border: OutlineInputBorder(
-                          borderSide: BorderSide(color: grey),
-                          borderRadius: BorderRadius.circular(8)),
-                      enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: grey),
-                          borderRadius: BorderRadius.circular(8))),
-                ),
-                verticalItemSpacer(),
-                GestureDetector(
-                  onTap: () {
-                    postReview(_reviewController.text);
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: primary,
-                        borderRadius: BorderRadius.circular(8),
-                        boxShadow: listShadow),
-                    alignment: Alignment.center,
-                    width: double.infinity,
-                    height: 48,
-                    child: customText(
-                        text: 'Post', weight: FontWeight.bold, color: white),
-                  ),
-                )
-              ],
-            )),
-      ),
+              )
+            ],
+          )),
     );
   }
 }
