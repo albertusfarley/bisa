@@ -182,7 +182,9 @@ class _LocationDetailsState extends State<LocationDetails>
                                             text: 'View',
                                             active: true,
                                             onPressed: () =>
-                                                Get.to(ParkingScreen()),
+                                                Get.to(ParkingScreen(
+                                              name: parking.name,
+                                            )),
                                           ),
                                           RoundedButton(
                                             iconData: Ionicons.navigate_outline,
