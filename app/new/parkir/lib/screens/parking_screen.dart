@@ -21,8 +21,12 @@ class _ParkingScreenState extends State<ParkingScreen> {
       appBar: AppBar(
         title: LocationName(raw: widget.name).widget(size: 16),
       ),
-      body: Image.network(
-          'https://raw.githubusercontent.com/albertusfarley/bisa/main/public/locations/binus_syahdan/assets/parking.png'),
+      body: InteractiveViewer(
+        child: Center(
+          child: Image.network(
+              'https://raw.githubusercontent.com/albertusfarley/bisa/main/public/locations/binus_syahdan/assets/parking_lot.png'),
+        ),
+      ),
       // body: Center(
       //   child: InteractiveViewer(
       //     child: Container(
