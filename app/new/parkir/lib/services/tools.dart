@@ -1,9 +1,4 @@
-import 'dart:math';
-
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:parkir/constants/colors.dart';
-import 'package:parkir/widgets/custom_text.dart';
 
 class Tools {
   static int totalReviews({required Map rates}) =>

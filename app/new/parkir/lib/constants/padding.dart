@@ -9,6 +9,10 @@ verticalSpacer() => const SizedBox(
       height: verticalPadding,
     );
 
+horizontalSpacer() => const SizedBox(
+      width: horizontalPadding,
+    );
+
 horizontalItemSpacer({bool half = false}) =>
     SizedBox(width: half ? horizontalItemPadding / 2 : horizontalItemPadding);
 verticalItemSpacer({bool half = false}) =>

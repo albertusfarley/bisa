@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:parkir/constants/colors.dart';
 
 customText({
@@ -11,6 +12,7 @@ customText({
 }) =>
     Text(
       text,
-      style: TextStyle(color: color, fontSize: size, fontWeight: weight),
+      style: GoogleFonts.lexendDeca(
+          color: color, fontSize: size, fontWeight: weight),
       textAlign: alignment,
     );

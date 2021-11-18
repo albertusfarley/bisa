@@ -183,6 +183,7 @@ class _LocationDetailsState extends State<LocationDetails>
                                             active: true,
                                             onPressed: () =>
                                                 Get.to(ParkingScreen(
+                                              id: parking.id,
                                               name: parking.name,
                                             )),
                                           ),

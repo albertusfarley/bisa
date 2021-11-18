@@ -32,6 +32,9 @@ class DatabaseService {
   Stream<DocumentSnapshot> getBannersStream() =>
       globalCollection.doc('banners').snapshots();
 
+  Stream<DocumentSnapshot> getParkingStream({required String id}) =>
+      locationsCollection.doc(id).collection('data').doc('parking').snapshots();
+
   Future<List> getLocationsCollection() async {
     QuerySnapshot snapshot = await locationsCollection.get();
     return snapshot.docs.map((doc) => doc.data()).toList();

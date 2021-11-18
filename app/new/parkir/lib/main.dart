@@ -1,11 +1,13 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/date_symbol_data_file.dart';
 import 'package:parkir/bindings/auth_binding.dart';
 import 'package:parkir/constants/colors.dart';
 import 'package:parkir/controllers/my_controller.dart';
+import 'package:parkir/controllers/ticket_controller.dart';
 import 'package:parkir/routes/routes.dart';
 import 'package:parkir/screens/wrapper.dart';
 import 'package:get/get.dart';
@@ -13,8 +15,10 @@ import 'package:get/get.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await GetStorage.init();
 
   Get.put(MyController());
+  Get.put(TicketController());
 
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {

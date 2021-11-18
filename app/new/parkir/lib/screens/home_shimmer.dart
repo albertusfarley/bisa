@@ -6,8 +6,8 @@ import 'package:parkir/widgets/location_list.dart';
 import 'package:parkir/widgets/banner_list.dart';
 import 'package:parkir/widgets/new_list.dart';
 
-class DashboardShimmer extends StatelessWidget {
-  const DashboardShimmer({Key? key}) : super(key: key);
+class HomeShimmer extends StatelessWidget {
+  const HomeShimmer({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
